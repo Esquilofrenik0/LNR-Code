@@ -142,7 +142,7 @@ void AHuman::TraceMelee()
 					MeleeHits.Add(hitActor);
 					if (ABody* hitBody = Cast<ABody>(hitActor))
 					{
-						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
+						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, DefaultDamageType);
 					}
 				}
 			}
@@ -157,7 +157,7 @@ void AHuman::TraceMelee()
 					MeleeHits.Add(hitActor);
 					if (ABody* hitBody = Cast<ABody>(hitActor))
 					{
-						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
+						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, DefaultDamageType);
 					}
 				}
 			}

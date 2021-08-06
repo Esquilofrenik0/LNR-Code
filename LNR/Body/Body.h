@@ -43,6 +43,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UStaticMesh* LootBagMesh;
 	UPROPERTY(Replicated) AContainer* LootBag;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) TSubclassOf<UDamageType> DefaultDamageType;
+	
 	UFUNCTION() void OnRep_Ability(TArray<FGameplayAbilitySpecHandle> oldAbility);
 	UFUNCTION() void OnRep_Passive(TArray<FGameplayAbilitySpecHandle> oldPassive);
 	

@@ -3,10 +3,8 @@
 #include "GameFramework/DamageType.h"
 #include "MeleeDamage.generated.h"
 
-UCLASS()
+UCLASS(const)
 class LNR_API UMeleeDamage : public UDamageType
 {
 	GENERATED_BODY()
-public:
-	UMeleeDamage();
 };

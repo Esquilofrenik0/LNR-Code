@@ -541,7 +541,7 @@ void AHero::TraceMelee()
 				if (!MeleeHits.Contains(hitActor))
 				{
 					MeleeHits.Add(hitActor);
-					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, UMeleeDamage().GetClass());
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, DefaultDamageType);
 				}
 			}
 		}
@@ -553,7 +553,7 @@ void AHero::TraceMelee()
 				if (!MeleeHits.Contains(hitActor))
 				{
 					MeleeHits.Add(hitActor);
-					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, UMeleeDamage().GetClass());
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, DefaultDamageType);
 				}
 			}
 		}

@@ -7,6 +7,4 @@ UCLASS()
 class LNR_API URangedDamage : public UDamageType
 {
 	GENERATED_BODY()
-public:
-	URangedDamage();
 };
