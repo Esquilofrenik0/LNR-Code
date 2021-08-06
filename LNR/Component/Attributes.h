@@ -54,8 +54,8 @@ public:
 	TEnumAsByte<EState> State;
 	UFUNCTION() virtual void OnRep_State(TEnumAsByte<EState> oldState);
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Faction)
-	TEnumAsByte<EFaction> Faction;
-	UFUNCTION() virtual void OnRep_Faction(EFaction oldFaction);
+	FFaction Faction;
+	UFUNCTION() virtual void OnRep_Faction(FFaction oldFaction);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Combo)
 	int Combo;

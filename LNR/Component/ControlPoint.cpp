@@ -6,17 +6,41 @@ UControlPoint::UControlPoint()
 {
 	Influence = 1;
 	IncrementAmount = 0.01;
-	ControlFaction = EFaction::Plagued;
 }
 
-TSubclassOf<ABody> UControlPoint::GetSpawnTemplate()
+void UControlPoint::BeginPlay()
 {
-	return SpawnTemplates[ControlFaction];	
+	GetAllFactions.Broadcast();
+}
+
+TSubclassOf<ACharacter> UControlPoint::GetSpawnTemplate()
+{
+	FFactionInfo info;
+	if(ControlFaction.GetFactionInfo(info))
+	{
+		return info.SpawnTemplate;
+	}
+	return nullptr;
 }
 
 UTexture2D* UControlPoint::GetFactionIcon()
 {
-	return FactionIcons[ControlFaction];
+	FFactionInfo info;
+	if(ControlFaction.GetFactionInfo(info))
+	{
+		return info.Icon;
+	}
+	return nullptr;
+}
+
+FLinearColor UControlPoint::GetFactionColor()
+{
+	FFactionInfo info;
+	if(ControlFaction.GetFactionInfo(info))
+	{
+		return info.Color;
+	}
+	return FLinearColor();
 }
 
 void UControlPoint::AddBody(ABody* body)
@@ -90,27 +114,42 @@ void UControlPoint::DecreaseInfluence()
 }
 
 
-TEnumAsByte<EFaction> UControlPoint::GetWinningFaction()
+FFaction UControlPoint::GetWinningFaction()
 {
 	TArray<int> FactionPoints;
-	FactionPoints.Init(0, 10);
+	FactionPoints.Init(0, Factions.Num());
 	int i = 0;
 	for (ABody* body : Bodies)
 	{
-		FactionPoints[body->Attributes->Faction] += 1;
+		if(body->Attributes->State != EState::Dead) FactionPoints[GetFactionNum(body->Attributes->Faction)] += 1;
 		i++;
 	}
 	if (i == 0 || (i == 1 && Bodies[0]->Attributes->Faction == ControlFaction)) return ControlFaction;
-	int winningScore = FactionPoints[ControlFaction];
-	int winningFaction = ControlFaction;
+	
+	int winningScore = FactionPoints[GetFactionNum(ControlFaction)];
+	FFaction winningFaction = ControlFaction;
 	int j;
 	for (j = 0; j < FactionPoints.Num(); j++)
 	{
 		if (FactionPoints[j] > winningScore)
 		{
 			winningScore = FactionPoints[j];
-			winningFaction = j;
+			winningFaction = GetFactionValue(j);
 		}
 	}
-	return (TEnumAsByte<EFaction>)winningFaction;
+	return winningFaction;
+}
+
+int UControlPoint::GetFactionNum(FFaction faction)
+{
+	for(int i=0; i<Factions.Num();i++)
+	{
+		if(Factions[i] == faction) return i;
+	}
+	return 0;
+}
+
+FFaction UControlPoint::GetFactionValue(int num)
+{
+	return Factions[num];
 }

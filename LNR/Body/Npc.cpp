@@ -53,7 +53,7 @@ void ANpc::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 		{
 			if (ABody* body = Cast<ABody>(DetectedPawns[i]))
 			{
-				if (body->Attributes->State != EState::Dead && body->Attributes->Faction != Body->Attributes->Faction)
+				if (body->Attributes->State != EState::Dead && Body->Attributes->Faction.IsHostileTowards(body->Attributes->Faction))
 				{
 					Target = body;
 					BlackboardComponent->SetValueAsObject(TargetKey, Target);
