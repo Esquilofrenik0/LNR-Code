@@ -21,7 +21,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddItem(class UItem* item, int amount = 1);
 	UFUNCTION(Server, Reliable)
-	void ServerAddItem(class UItem* dItem);
+	void ServerAddItem(class UItem* dItem, int amount);
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveItem(class UItem* item);

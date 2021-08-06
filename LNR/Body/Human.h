@@ -45,7 +45,7 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerWeaponSwap();
 
-	virtual ABody* TraceMelee() override;
+	virtual void TraceMelee() override;
 	virtual ABody* Shoot() override;
 	virtual UAnimMontage* GetCombatMontage() override;	
 };

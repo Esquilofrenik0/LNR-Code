@@ -1,12 +1,15 @@
 #include "Hero.h"
 #include "LNR/Network/Playor.h"
 #include "Abilities/GameplayAbilityTypes.h"
+#include "LNR/Data/RangedDamage.h"
+#include "LNR/Data/MeleeDamage.h"
 #include "LNR/Component/Action.h"
 #include "LNR/Component/Inventory.h"
 #include "LNR/Component/Equipment.h"
 #include "LNR/Component/Trace.h"
 #include "Camera/CameraComponent.h"
 #include "Components/InputComponent.h"
+#include "Foliage/Public/InstancedFoliageActor.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -16,6 +19,7 @@
 #include "LNR/Item/Item.h"
 #include "Kismet/GameplayStatics.h"
 #include "LNR/Component/Attributes.h"
+#include "LNR/Item/WeaponComponent.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -520,4 +524,53 @@ void AHero::SetAttacking_Implementation(bool value)
 void AHero::SetSprinting_Implementation(bool value)
 {
 	Attributes->Sprinting = value;
+}
+
+void AHero::TraceMelee()
+{
+	if (HasAuthority())
+	{
+		if (Equipment->Weapon[0] != nullptr)
+		{
+			FVector start = Equipment->WeaponSlot[0]->GetSocketLocation("TraceStart");
+			FVector end = Equipment->WeaponSlot[0]->GetSocketLocation("TraceFinish");
+			FHitResult hit = Trace->Line(start, end, 1, false);
+
+			if (AActor* hitActor = hit.GetActor())
+			{
+				if (!MeleeHits.Contains(hitActor))
+				{
+					MeleeHits.Add(hitActor);
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, UMeleeDamage().GetClass());
+				}
+			}
+		}
+		else
+		{
+			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 10, 1, false);
+			if (AActor* hitActor = hit.GetActor())
+			{
+				if (!MeleeHits.Contains(hitActor))
+				{
+					MeleeHits.Add(hitActor);
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, UMeleeDamage().GetClass());
+				}
+			}
+		}
+	}
+}
+
+void AHero::OnFoliageHarvested_Implementation(AActor* FoliageActor, const TArray<FFoliageRewardData>& Rewards)
+{
+	if(HasAuthority())
+	{
+		for(FFoliageRewardData data : Rewards)
+		{
+			if(UItem* item = Cast<UItem>(data.RewardOnHarvest.GetDefaultObject()))
+			{
+				int amount = FMath::RandRange(data.NumRewards.Min, data.NumRewards.Max);
+				Inventory->AddItem(item, amount);
+			}
+		}
+	}	
 }

@@ -38,8 +38,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void OnPossess(APawn* InPawn) override;
 
-	UFUNCTION()
-	void OnPawnDetected(const TArray<AActor*>& DetectedPawns);
-	UFUNCTION()
-	void CanSeeTarget();
+	UFUNCTION() void OnPawnDetected(const TArray<AActor*>& DetectedPawns);
+	UFUNCTION() void CanSeeTarget();
 };

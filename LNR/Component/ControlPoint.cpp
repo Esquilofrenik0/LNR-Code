@@ -18,7 +18,7 @@ TSubclassOf<ACharacter> UControlPoint::GetSpawnTemplate()
 	FFactionInfo info;
 	if(ControlFaction.GetFactionInfo(info))
 	{
-		return info.SpawnTemplate;
+		return info.SpawnTemplate.Get();
 	}
 	return nullptr;
 }

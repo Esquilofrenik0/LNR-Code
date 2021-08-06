@@ -29,8 +29,18 @@ void UInventory::AddItem(class UItem* item, int amount)
 		{
 			if (Slots[i].item == item)
 			{
-				Slots[i].amount += amount;
-				return;
+				int finalAmount = Slots[i].amount + amount;
+				if(Slots[i].item->Stack >= finalAmount)
+				{
+					Slots[i].amount += amount;					
+					return;
+				}
+				else
+				{
+					int receivedAmount = item->Stack - Slots[i].amount;
+					Slots[i].amount += receivedAmount;
+					amount -= receivedAmount;
+				}
 			}
 		}
 		for (int i = 0; i < Slots.Num(); i++)
@@ -43,15 +53,12 @@ void UInventory::AddItem(class UItem* item, int amount)
 			}
 		}
 	}
-	else
-	{
-		ServerAddItem(item);
-	}
+	else ServerAddItem(item, amount);
 }
 
-void UInventory::ServerAddItem_Implementation(class UItem* item)
+void UInventory::ServerAddItem_Implementation(class UItem* item, int amount)
 {
-	AddItem(item);
+	AddItem(item, amount);
 }
 
 void UInventory::RemoveItem(class UItem* item)

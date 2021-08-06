@@ -71,7 +71,6 @@ public:
 	virtual void OnRep_PlayerState() override;
 	virtual void PossessedBy(AController* NewController) override;
 
-	// UPROPERTY(BlueprintReadWrite, EditAnywhere) FFaction Faction;
 	virtual FFaction GetFaction() const override;
 	virtual void SetFaction(const FFaction& InFaction) override;
 
@@ -95,7 +94,7 @@ public:
 	UFUNCTION(Server, Reliable) void ServerHolster(bool value);
 
 	UFUNCTION(BlueprintCallable) virtual void ResetMelee();
-	UFUNCTION(BlueprintCallable) virtual ABody* TraceMelee();
+	UFUNCTION(BlueprintCallable) virtual void TraceMelee();
 	UFUNCTION(BlueprintCallable) virtual ABody* Shoot();
 	UFUNCTION(BlueprintCallable) virtual UAnimMontage* GetCombatMontage();
 	UFUNCTION(BlueprintCallable) virtual void ResetCombo();

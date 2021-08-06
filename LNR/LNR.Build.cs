@@ -7,8 +7,9 @@ public class LNR : ModuleRules
 	public LNR(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-		PublicDependencyModuleNames.AddRange(new string[] {"Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem"});
+		PublicDependencyModuleNames.AddRange(new string[] {"Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "Foliage"});
 		PublicDependencyModuleNames.AddRange(new string[] {"GameplayAbilities", "GameplayTags", "GameplayTasks", "UMG", "OnlineSubsystemUtils", "DeveloperSettings"});
-		PrivateDependencyModuleNames.AddRange(new string[] {"Factions", "OnlineSubsystem", "Http", "Json"});
+		PublicDependencyModuleNames.AddRange(new string[] {"FoliagePlugin", "Factions"});
+		PrivateDependencyModuleNames.AddRange(new string[] {"OnlineSubsystem", "Http", "Json"});
 	}
 }

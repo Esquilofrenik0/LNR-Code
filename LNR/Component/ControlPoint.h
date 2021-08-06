@@ -11,16 +11,13 @@ class LNR_API UControlPoint : public UPointOfInterest
 public:
 	UControlPoint();
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere) TArray<TSubclassOf<class ABody>> SpawnTemplates;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere) TArray<class UTexture2D*> FactionIcons;
+	UPROPERTY(BlueprintReadWrite) TArray<FFaction> Factions;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere) FFaction ControlFaction;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere) FFaction ContestingFaction;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere) TArray<class ABody*> Bodies;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere) float Influence;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere) float IncrementAmount;
 	UPROPERTY(BlueprintReadWrite) FTimerHandle InfluenceTimer;
-	
-	UPROPERTY(BlueprintReadWrite) TArray<FFaction> Factions;
 	
 	virtual void BeginPlay() override;
 	UFUNCTION(BlueprintCallable) TSubclassOf<ACharacter> GetSpawnTemplate();

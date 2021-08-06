@@ -12,6 +12,7 @@
 #include "LNR/Component/Attributes.h"
 #include "Net/UnrealNetwork.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Foliage/Public/InstancedFoliageActor.h"
 #include "LNR/Network/Playor.h"
 #include "LNR/Component/Inventory.h"
 #include "LNR/Item/Dropable.h"
@@ -241,7 +242,7 @@ void ABody::ResetMelee()
 	MeleeHits.Reset();
 }
 
-ABody* ABody::TraceMelee()
+void ABody::TraceMelee()
 {
 	if (GetLocalRole() == ROLE_Authority)
 	{
@@ -254,12 +255,10 @@ ABody* ABody::TraceMelee()
 				if (ABody* hitBody = Cast<ABody>(hitActor))
 				{
 					UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
-					return hitBody;
 				}
 			}
 		}
 	}
-	return nullptr;
 }
 
 ABody* ABody::Shoot()

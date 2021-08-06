@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "../../Plugins/FactionsExtension/Source/Factions/Public/FactionsModule.h"
 #include "../../Plugins/FactionsExtension/Source/Factions/Public/FactionsLibrary.h"
+#include "../../../Plugins/FoliagePlugin/Source/FoliagePlugin/Public/FoliagePluginInterface.h"
 
 UENUM(BlueprintType)
 enum EState

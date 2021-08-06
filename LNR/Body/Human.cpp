@@ -125,7 +125,7 @@ void AHuman::ServerWeaponSwap_Implementation()
 	WeaponSwap();
 }
 
-ABody* AHuman::TraceMelee()
+void AHuman::TraceMelee()
 {
 	if (GetLocalRole() == ROLE_Authority)
 	{
@@ -143,14 +143,13 @@ ABody* AHuman::TraceMelee()
 					if (ABody* hitBody = Cast<ABody>(hitActor))
 					{
 						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
-						return hitBody;
 					}
 				}
 			}
 		}
 		else
 		{
-			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 20, 1, false);
+			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 10, 1, false);
 			if (AActor* hitActor = hit.GetActor())
 			{
 				if (!MeleeHits.Contains(hitActor))
@@ -159,13 +158,11 @@ ABody* AHuman::TraceMelee()
 					if (ABody* hitBody = Cast<ABody>(hitActor))
 					{
 						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
-						return hitBody;
 					}
 				}
 			}
 		}
 	}
-	return nullptr;
 }
 
 ABody* AHuman::Shoot()

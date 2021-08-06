@@ -2,11 +2,11 @@
 #include "CoreMinimal.h"
 #include "Human.h"
 #include "LNR/Item/Gun.h"
-
+#include "LNR/LNR.h"
 #include "Hero.generated.h"
 
 UCLASS()
-class AHero : public AHuman
+class AHero : public AHuman, public IFoliagePluginInterface
 {
 	GENERATED_BODY()
 public:
@@ -95,6 +95,7 @@ public:
 	virtual void DropInventory() override;
 	virtual void Die() override;
 	virtual void DestroyCorpse() override;
+	virtual void TraceMelee() override;
 
 	UFUNCTION(Server, Reliable) void SetAttacking(bool value);
 	UFUNCTION(Server, Reliable) void SetSprinting(bool value);
@@ -108,4 +109,7 @@ public:
 	UFUNCTION(BlueprintImplementableEvent) void ShowWorldMap(bool value);
 	UFUNCTION(BlueprintImplementableEvent) void ShowWorldMarkers(bool value);
 	UFUNCTION(BlueprintImplementableEvent) void UpdateCompass();
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Foliage Plugin | Interface")
+	void OnFoliageHarvested(AActor* FoliageActor, const TArray<FFoliageRewardData>& Rewards);
 };
