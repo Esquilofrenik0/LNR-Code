@@ -40,98 +40,73 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Attacking)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Attacking)
 	bool Attacking;
-	UFUNCTION()
-	void OnRep_Attacking(bool oldAttacking);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Sprinting)
+	UFUNCTION() void OnRep_Attacking(bool oldAttacking);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Sprinting)
 	bool Sprinting;
-	UFUNCTION()
-	void OnRep_Sprinting(bool oldSprinting);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Blocking)
+	UFUNCTION() void OnRep_Sprinting(bool oldSprinting);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Blocking)
 	bool Blocking;
-	UFUNCTION()
-	void OnRep_Blocking(bool oldBlocking);
+	UFUNCTION() void OnRep_Blocking(bool oldBlocking);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_State)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_State)
 	TEnumAsByte<EState> State;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Faction)
+	UFUNCTION() virtual void OnRep_State(TEnumAsByte<EState> oldState);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Faction)
 	TEnumAsByte<EFaction> Faction;
-	UFUNCTION()
-	virtual void OnRep_State(TEnumAsByte<EState> oldState);
-	UFUNCTION()
-	virtual void OnRep_Faction(TEnumAsByte<EFaction> oldFaction);
+	UFUNCTION() virtual void OnRep_Faction(EFaction oldFaction);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Combo)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Combo)
 	int Combo;
-	UFUNCTION()
-	virtual void OnRep_Combo(int oldCombo);
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_MaxCombo)
+	UFUNCTION() virtual void OnRep_Combo(int oldCombo);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_MaxCombo)
 	int MaxCombo;
-	UFUNCTION()
-	virtual void OnRep_MaxCombo(int oldMaxCombo);
+	UFUNCTION() virtual void OnRep_MaxCombo(int oldMaxCombo);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Health)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Health)
 	float Health;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Stamina)
+	UFUNCTION()	virtual void OnRep_Health(float oldHealth);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Stamina)
 	float Stamina;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Hunger)
+	UFUNCTION()	virtual void OnRep_Stamina(float oldStamina);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Hunger)
 	float Hunger;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Damage)
+	UFUNCTION()	virtual void OnRep_Hunger(float oldHunger);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Damage)
 	float Damage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_Defense)
+	UFUNCTION()	virtual void OnRep_Damage(float oldDamage);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_Defense)
 	float Defense;
+	UFUNCTION()	virtual void OnRep_Defense(float oldDefense);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_MaxHealth)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_MaxHealth)
 	float MaxHealth;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_MaxStamina)
+	UFUNCTION()	virtual void OnRep_MaxHealth(float oldMaxHealth);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_MaxStamina)
 	float MaxStamina;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_MaxHunger)
+	UFUNCTION()	virtual void OnRep_MaxStamina(float oldMaxStamina);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_MaxHunger)
 	float MaxHunger;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_BaseDamage)
+	UFUNCTION()	virtual void OnRep_MaxHunger(float oldMaxHunger);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_BaseDamage)
 	float BaseDamage;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_BaseDefense)
+	UFUNCTION()	virtual void OnRep_BaseDamage(float oldBaseDamage);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_BaseDefense)
 	float BaseDefense;
+	UFUNCTION()	virtual void OnRep_BaseDefense(float oldBaseDefense);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_HealthRegeneration)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_HealthRegeneration)
 	float HealthRegeneration;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_StaminaRegeneration)
+	UFUNCTION()	virtual void OnRep_HealthRegeneration(float oldHealthRegeneration);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_StaminaRegeneration)
 	float StaminaRegeneration;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_HungerRegeneration)
+	UFUNCTION()	virtual void OnRep_StaminaRegeneration(float oldStaminaRegeneration);
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_HungerRegeneration)
 	float HungerRegeneration;
+	UFUNCTION()	virtual void OnRep_HungerRegeneration(float oldHungerRegeneration);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Attributes", ReplicatedUsing = OnRep_RespawnTime)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, ReplicatedUsing = OnRep_RespawnTime)
 	float RespawnTime;
-
-	UFUNCTION()
-	virtual void OnRep_Health(float oldHealth);
-	UFUNCTION()
-	virtual void OnRep_Stamina(float oldStamina);
-	UFUNCTION()
-	virtual void OnRep_Hunger(float oldHunger);
-	UFUNCTION()
-	virtual void OnRep_Damage(float oldDamage);
-	UFUNCTION()
-	virtual void OnRep_Defense(float oldDefense);
-
-	UFUNCTION()
-	virtual void OnRep_MaxHealth(float oldMaxHealth);
-	UFUNCTION()
-	virtual void OnRep_MaxStamina(float oldMaxStamina);
-	UFUNCTION()
-	virtual void OnRep_MaxHunger(float oldMaxHunger);
-	UFUNCTION()
-	virtual void OnRep_BaseDamage(float oldBaseDamage);
-	UFUNCTION()
-	virtual void OnRep_BaseDefense(float oldBaseDefense);
-
-	UFUNCTION()
-	virtual void OnRep_HealthRegeneration(float oldHealthRegeneration);
-	UFUNCTION()
-	virtual void OnRep_StaminaRegeneration(float oldStaminaRegeneration);
-	UFUNCTION()
-	virtual void OnRep_HungerRegeneration(float oldHungerRegeneration);
-
-	UFUNCTION()
-	virtual void OnRep_RespawnTime(float oldRespawnTime);
+	UFUNCTION()	virtual void OnRep_RespawnTime(float oldRespawnTime);
 };

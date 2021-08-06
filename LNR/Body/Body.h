@@ -9,7 +9,7 @@
 #include "Body.generated.h"
 
 UCLASS(config=Game)
-class LNR_API ABody : public ACharacter, public IAbilitySystemInterface
+class LNR_API ABody : public ACharacter, public IAbilitySystemInterface, public IFactionAgentInterface
 {
 	GENERATED_BODY()
 public:
@@ -70,6 +70,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void OnRep_PlayerState() override;
 	virtual void PossessedBy(AController* NewController) override;
+
+	virtual FFaction GetFaction() const override;
+	virtual void SetFaction(const FFaction& InFaction) override;
 
 	UFUNCTION() virtual class UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UFUNCTION() virtual void InitializeAttributes();

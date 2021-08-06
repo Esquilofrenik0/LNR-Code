@@ -119,6 +119,16 @@ void ABody::PossessedBy(AController* NewController)
 	Attributes->MaxCombo = UnarmedMontage.Num();
 }
 
+FFaction ABody::GetFaction() const
+{
+	return Attributes->Faction;
+}
+
+void ABody::SetFaction(const FFaction& InFaction)
+{
+	Attributes->Faction = InFaction;
+}
+
 void ABody::BeginPlay()
 {
 	Super::BeginPlay();

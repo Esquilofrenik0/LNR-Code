@@ -1,5 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "../../Plugins/FactionsExtension/Source/Factions/Public/Factions/Faction.h"
+#include "../../Plugins/FactionsExtension/Source/Factions/Public/Factions/FactionAgentInterface.h"
 
 UENUM(BlueprintType)
 enum EState

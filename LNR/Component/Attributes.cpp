@@ -1,11 +1,11 @@
 ﻿#include "Attributes.h"
 #include "AbilitySystemComponent.h"
+#include "LNR/LNR.h"
 #include "Net/UnrealNetwork.h"
 
 UAttributes::UAttributes()
 {
 	State = EState::Idle;
-	Faction = EFaction::Loner;
 
 	Combo = 0;
 	MaxCombo = 1;
@@ -79,7 +79,7 @@ void UAttributes::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributes, State, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UAttributes, Faction, COND_None, REPNOTIFY_Always);
+	// DOREPLIFETIME_CONDITION_NOTIFY(UAttributes, Faction, COND_None, REPNOTIFY_Always);
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributes, Combo, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UAttributes, MaxCombo, COND_None, REPNOTIFY_Always);
@@ -127,7 +127,7 @@ void UAttributes::OnRep_State(TEnumAsByte<EState> oldState)
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributes, State, oldState);
 }
 
-void UAttributes::OnRep_Faction(TEnumAsByte<EFaction> oldFaction)
+void UAttributes::OnRep_Faction(EFaction oldFaction)
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UAttributes, Faction, oldFaction);
 }
