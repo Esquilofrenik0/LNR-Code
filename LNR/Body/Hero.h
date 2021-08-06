@@ -95,7 +95,6 @@ public:
 	virtual void DropInventory() override;
 	virtual void Die() override;
 	virtual void DestroyCorpse() override;
-	virtual void TraceMelee() override;
 
 	UFUNCTION(Server, Reliable) void SetAttacking(bool value);
 	UFUNCTION(Server, Reliable) void SetSprinting(bool value);

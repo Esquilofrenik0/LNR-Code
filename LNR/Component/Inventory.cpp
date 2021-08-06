@@ -23,6 +23,7 @@ void UInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifeti
 
 void UInventory::AddItem(class UItem* item, int amount)
 {
+	if(item == nullptr || amount <= 0) return;
 	if (GetOwnerRole() == ROLE_Authority)
 	{
 		for (int i = 0; i < Slots.Num(); i++)

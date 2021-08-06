@@ -46,6 +46,5 @@ public:
 	void ServerWeaponSwap();
 
 	virtual void TraceMelee() override;
-	virtual ABody* Shoot() override;
 	virtual UAnimMontage* GetCombatMontage() override;	
 };

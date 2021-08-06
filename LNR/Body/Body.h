@@ -43,7 +43,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UStaticMesh* LootBagMesh;
 	UPROPERTY(Replicated) AContainer* LootBag;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) TSubclassOf<UDamageType> DefaultDamageType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) TSubclassOf<UDamageType> MeleeDamageType;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) TSubclassOf<UDamageType> RangedDamageType;
 	
 	UFUNCTION() void OnRep_Ability(TArray<FGameplayAbilitySpecHandle> oldAbility);
 	UFUNCTION() void OnRep_Passive(TArray<FGameplayAbilitySpecHandle> oldPassive);
@@ -97,7 +98,7 @@ public:
 
 	UFUNCTION(BlueprintCallable) virtual void ResetMelee();
 	UFUNCTION(BlueprintCallable) virtual void TraceMelee();
-	UFUNCTION(BlueprintCallable) virtual ABody* Shoot();
+	UFUNCTION(BlueprintCallable) virtual void Shoot();
 	UFUNCTION(BlueprintCallable) virtual UAnimMontage* GetCombatMontage();
 	UFUNCTION(BlueprintCallable) virtual void ResetCombo();
 

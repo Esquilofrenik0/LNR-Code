@@ -1,8 +1,5 @@
 #include "Hero.h"
 #include "LNR/Network/Playor.h"
-#include "Abilities/GameplayAbilityTypes.h"
-#include "LNR/Data/RangedDamage.h"
-#include "LNR/Data/MeleeDamage.h"
 #include "LNR/Component/Action.h"
 #include "LNR/Component/Inventory.h"
 #include "LNR/Component/Equipment.h"
@@ -524,40 +521,6 @@ void AHero::SetAttacking_Implementation(bool value)
 void AHero::SetSprinting_Implementation(bool value)
 {
 	Attributes->Sprinting = value;
-}
-
-void AHero::TraceMelee()
-{
-	if (HasAuthority())
-	{
-		if (Equipment->Weapon[0] != nullptr)
-		{
-			FVector start = Equipment->WeaponSlot[0]->GetSocketLocation("TraceStart");
-			FVector end = Equipment->WeaponSlot[0]->GetSocketLocation("TraceFinish");
-			FHitResult hit = Trace->Line(start, end, 1, false);
-
-			if (AActor* hitActor = hit.GetActor())
-			{
-				if (!MeleeHits.Contains(hitActor))
-				{
-					MeleeHits.Add(hitActor);
-					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, DefaultDamageType);
-				}
-			}
-		}
-		else
-		{
-			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 10, 1, false);
-			if (AActor* hitActor = hit.GetActor())
-			{
-				if (!MeleeHits.Contains(hitActor))
-				{
-					MeleeHits.Add(hitActor);
-					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, DefaultDamageType);
-				}
-			}
-		}
-	}
 }
 
 void AHero::OnFoliageHarvested_Implementation(AActor* FoliageActor, const TArray<FFoliageRewardData>& Rewards)

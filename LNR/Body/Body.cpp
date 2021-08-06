@@ -15,8 +15,8 @@
 #include "Foliage/Public/InstancedFoliageActor.h"
 #include "LNR/Network/Playor.h"
 #include "LNR/Component/Inventory.h"
+#include "LNR/Data/MeleeDamage.h"
 #include "LNR/Item/Dropable.h"
-#include "LNR/Item/Slot.h"
 #include "LNR/Object/Container.h"
 
 ABody::ABody()
@@ -252,18 +252,31 @@ void ABody::TraceMelee()
 			if (!MeleeHits.Contains(hitActor))
 			{
 				MeleeHits.Add(hitActor);
-				if (ABody* hitBody = Cast<ABody>(hitActor))
-				{
-					UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, DefaultDamageType);
-				}
+				UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit,
+				                                   GetController(), this, MeleeDamageType);
 			}
 		}
 	}
 }
 
-ABody* ABody::Shoot()
+void ABody::Shoot()
 {
-	return nullptr;
+	if (HasAuthority())
+	{
+		FVector start;
+		FRotator rot;
+		if (AController* controller = GetController())
+		{
+			controller->GetPlayerViewPoint(start, rot);
+			FVector end = start + (rot.Vector() * 10000.0f);
+			FHitResult hit = Trace->Line(start, end, 1, false);
+			if (AActor* hitActor = hit.GetActor())
+			{
+				UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit,
+				                                   GetController(), this, RangedDamageType);
+			}
+		}
+	}
 }
 
 UAnimMontage* ABody::GetCombatMontage()
@@ -360,9 +373,12 @@ float ABody::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
 	}
 	else
 	{
-		PlayMontage(GetMesh(), TakeDamageMontage);
-		Attributes->Combo = 0;
-		Attributes->State = EState::Attack;
+		if (DamageEvent.DamageTypeClass == MeleeDamageType)
+		{
+			PlayMontage(GetMesh(), TakeDamageMontage);
+			Attributes->Combo = 0;
+			Attributes->State = EState::Attack;
+		}
 		Attributes->Health -= DamageAmount;
 	}
 	if (Attributes->Health <= 0) Die();

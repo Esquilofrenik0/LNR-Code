@@ -2,15 +2,12 @@
 #include "LNR/Component/Trace.h"
 #include "LNR/Component/Equipment.h"
 #include "LNR/Item/Weapon.h"
-#include "LNR/Item/SKSpawn.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LNR/Component/Action.h"
 #include "LNR/Component/Attributes.h"
-#include "Kismet/GameplayStatics.h"
 #include "LNR/Item/Armor.h"
-#include "LNR/Item/Gun.h"
 #include "LNR/Item/WeaponComponent.h"
 
 AHuman::AHuman()
@@ -140,53 +137,23 @@ void AHuman::TraceMelee()
 				if (!MeleeHits.Contains(hitActor))
 				{
 					MeleeHits.Add(hitActor);
-					if (ABody* hitBody = Cast<ABody>(hitActor))
-					{
-						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, DefaultDamageType);
-					}
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, MeleeDamageType);
 				}
 			}
 		}
 		else
 		{
-			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 10, 1, false);
+			FHitResult hit = Trace->Circle(GetMesh()->GetSocketLocation("RightHand"), 20, 1, false);
 			if (AActor* hitActor = hit.GetActor())
 			{
 				if (!MeleeHits.Contains(hitActor))
 				{
 					MeleeHits.Add(hitActor);
-					if (ABody* hitBody = Cast<ABody>(hitActor))
-					{
-						UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, DefaultDamageType);
-					}
+					UGameplayStatics::ApplyPointDamage(hitActor, Attributes->Damage, GetActorLocation(), hit, GetController(), this, MeleeDamageType);
 				}
 			}
 		}
 	}
-}
-
-ABody* AHuman::Shoot()
-{
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		FVector start;
-		FRotator rot;
-		if (AController* controller = GetController())
-		{
-			controller->GetPlayerViewPoint(start, rot);
-			FVector end = start + (rot.Vector() * 1000000.0f);
-			FHitResult hit = Trace->Line(start, end, 1, false);
-			if (AActor* hitActor = hit.GetActor())
-			{
-				if (ABody* hitBody = Cast<ABody>(hitActor))
-				{
-					UGameplayStatics::ApplyDamage(hitBody, Attributes->Damage, GetController(), this, nullptr);
-					return hitBody;
-				}
-			}
-		}
-	}
-	return nullptr;
 }
 
 UAnimMontage* AHuman::GetCombatMontage()
