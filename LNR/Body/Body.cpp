@@ -121,12 +121,12 @@ void ABody::PossessedBy(AController* NewController)
 
 FFaction ABody::GetFaction() const
 {
-	return Attributes->Faction;
+	return Faction;
 }
 
 void ABody::SetFaction(const FFaction& InFaction)
 {
-	Attributes->Faction = InFaction;
+	Faction = InFaction;
 }
 
 void ABody::BeginPlay()
