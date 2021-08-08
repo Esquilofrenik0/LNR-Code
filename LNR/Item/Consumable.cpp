@@ -1,5 +1,6 @@
 #include "Consumable.h"
 #include "LNR/Body/Hero.h"
+#include "LNR/Component/Attributes.h"
 #include "LNR/Component/Inventory.h"
 
 UConsumable::UConsumable()
@@ -14,21 +15,22 @@ void UConsumable::UseItem(AHero* hero)
 	Super::UseItem(hero);
 	if (hero != nullptr)
 	{
-		Print("Used Consumable");
-		// if (healHealth != 0) { hero->Status->ChangeHealth(healHealth); }
-		// if (healStamina != 0) { hero->Status->ChangeStamina(healStamina); }
-		// if (healHunger != 0) { hero->Status->ChangeHunger(healHunger); }
+		if (healHealth != 0) { hero->Attributes->ChangeHealth(healHealth); }
+		if (healStamina != 0) { hero->Attributes->ChangeStamina(healStamina); }
+		if (healHunger != 0) { hero->Attributes->ChangeHunger(healHunger); }
 		hero->Inventory->RemoveItem(this);
 	}
 }
 
 FString UConsumable::PrintItemData()
 {
-	FString data = Name + "\r";
-	data += "Health: " + FString::FromInt(healHealth) + "\r";
-	data += "Stamina: " + FString::FromInt(healStamina) + "\r";
-	data += "Hunger: " + FString::FromInt(healHunger) + "\r";
-	data += "Price: " + FString::FromInt(Price) + "\r";
-	data += "Weight: " + FString::FromInt(Weight) + "\r";
+	FString data = "Name: " + Name.ToString() + "\r";
+	data += "Type: Consumable\r";
+	data += "Description: " + Description + "\r";
+	data += "Health: " + FString::SanitizeFloat(healHealth) + "\r";
+	data += "Stamina: " + FString::SanitizeFloat(healStamina) + "\r";
+	data += "Hunger: " + FString::SanitizeFloat(healHunger) + "\r";
+	data += "Price: " + FString::SanitizeFloat(Price) + "\r";
+	data += "Weight: " + FString::SanitizeFloat(Weight) + "\r";
 	return data;
 }

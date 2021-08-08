@@ -21,14 +21,8 @@ void ASpawn::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimePr
 
 void ASpawn::SetItem(class UItem* nItem)
 {
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		Item = nItem;
-	}
-	else
-	{
-		ServerSetItem(nItem);
-	}
+	if (HasAuthority()) Item = nItem;
+	else ServerSetItem(nItem);
 }
 
 void ASpawn::ServerSetItem_Implementation(class UItem* nItem)
@@ -38,14 +32,8 @@ void ASpawn::ServerSetItem_Implementation(class UItem* nItem)
 
 void ASpawn::DestroyItem()
 {
-	if (GetLocalRole() == ROLE_Authority)
-	{
-		MultiDestroyItem();
-	}
-	else
-	{
-		ServerDestroyItem();
-	}
+	if (HasAuthority()) MultiDestroyItem();
+	else ServerDestroyItem();
 }
 
 void ASpawn::ServerDestroyItem_Implementation()

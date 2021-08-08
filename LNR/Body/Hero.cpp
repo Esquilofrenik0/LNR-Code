@@ -448,7 +448,7 @@ void AHero::TraceHud()
 	{
 		if (ASpawn* spawn = Cast<ASpawn>(hitActor))
 		{
-			WriteWorldInfo(spawn->Item->PrintItemData());
+			if(spawn->Item != nullptr) WriteWorldInfo(spawn->Item->PrintItemData());
 			return;
 		}
 		else if (AContainer* container = Cast<AContainer>(hitActor))

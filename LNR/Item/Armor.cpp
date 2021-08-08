@@ -5,7 +5,7 @@
 
 UArmor::UArmor()
 {
-	defense = 0.0f;
+	Defense = 0.0f;
 }
 
 void UArmor::UseItem(AHero* hero)
@@ -16,10 +16,12 @@ void UArmor::UseItem(AHero* hero)
 
 FString UArmor::PrintItemData()
 {
-	FString data = Name + "\r";
-	data += "Defense: " + FString::FromInt(defense) + "\r";
-	data += "Price: " + FString::FromInt(Price) + "\r";
-	data += "Weight: " + FString::FromInt(Weight) + "\r";
+	FString data = "Name: " + Name.ToString() + "\r";
+	data += "Type: Armor\r";
+	data += "Description: " + Description + "\r";
+	data += "Defense: " + FString::SanitizeFloat(Defense) + "\r";
+	data += "Price: " + FString::SanitizeFloat(Price) + "\r";
+	data += "Weight: " + FString::SanitizeFloat(Weight) + "\r";
 	return data;
 }
 

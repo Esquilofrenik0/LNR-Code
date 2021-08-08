@@ -4,7 +4,7 @@
 #include "Armor.generated.h"
 
 UENUM()
-enum ArmorSlot
+enum EArmorSlot
 {
 	Head = 0 UMETA(DisplayName = "Head"),
 	Back = 1 UMETA(DisplayName = "Back"),
@@ -20,11 +20,11 @@ class LNR_API UArmor : public UItem
 public:
 	UArmor();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TEnumAsByte<ArmorSlot> type;
+	TEnumAsByte<EArmorSlot> Type;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USkeletalMesh* SkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float defense;
+	float Defense;
 
 	virtual void UseItem(AHero* hero) override;
 	virtual FString PrintItemData() override;

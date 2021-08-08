@@ -12,7 +12,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UTexture2D* Icon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString Name;
+	FName Name;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FString Description;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

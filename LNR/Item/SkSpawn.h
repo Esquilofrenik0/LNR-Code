@@ -11,9 +11,5 @@ public:
 	ASkSpawn();
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	USkeletalMeshComponent* SkeletalMesh;
-
 	virtual void BeginPlay() override;
-
-	// UFUNCTION()
-	// void OnRep_SkeletalMesh(USkeletalMeshComponent* oldSkeletalMesh);
 };

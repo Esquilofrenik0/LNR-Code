@@ -8,12 +8,10 @@ struct FSlot
 {
 	GENERATED_USTRUCT_BODY()
 
-	FSlot() : item(nullptr), amount(1)
+	FSlot() : Item(nullptr), Amount(1)
 	{
 	}
 
-	UPROPERTY(Instanced, EditAnywhere, BlueprintReadWrite)
-	UItem* item;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int amount;
+	UPROPERTY(Instanced, EditAnywhere, BlueprintReadWrite) UItem* Item;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite) int Amount;
 };

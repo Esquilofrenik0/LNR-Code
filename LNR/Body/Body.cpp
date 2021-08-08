@@ -299,7 +299,7 @@ void ABody::DropInventory()
 		if (drop.chance >= rand)
 		{
 			LootBag->Inventory->AddItem(drop.item, drop.amount);
-			Print(drop.item->Name + " Dropped");
+			Print(drop.item->Name.ToString() + " Dropped");
 		}
 	}
 }

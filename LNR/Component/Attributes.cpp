@@ -31,6 +31,27 @@ UAttributes::UAttributes()
 	RespawnTime = 60;
 }
 
+void UAttributes::ChangeHealth(float value)
+{
+	Health += value;
+	if(Health > MaxHealth) Health = MaxHealth;
+	else if(Health < 0) Health = 0;
+}
+
+void UAttributes::ChangeStamina(float value)
+{
+	Stamina += value;
+	if(Stamina > MaxStamina) Stamina = MaxStamina;
+	else if(Stamina < 0) Stamina = 0;
+}
+
+void  UAttributes::ChangeHunger(float value)
+{
+	Hunger += value;
+	if(Hunger > MaxHunger) Hunger = MaxHunger;
+	else if(Hunger < 0) Hunger = 0;
+}
+
 float UAttributes::GetHealthPercent() { return Health / MaxHealth; }
 
 float UAttributes::GetStaminaPercent() { return Stamina / MaxStamina; }

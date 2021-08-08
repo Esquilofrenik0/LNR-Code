@@ -17,18 +17,16 @@ class LNR_API UAttributes : public UAttributeSet
 public:
 	UAttributes();
 
-	UFUNCTION(BlueprintCallable)
-	float GetHealthPercent();
-	UFUNCTION(BlueprintCallable)
-	float GetStaminaPercent();
-	UFUNCTION(BlueprintCallable)
-	float GetHungerPercent();
-	UFUNCTION(BlueprintCallable)
-	FString GetHealthText();
-	UFUNCTION(BlueprintCallable)
-	FString GetStaminaText();
-	UFUNCTION(BlueprintCallable)
-	FString GetHungerText();
+	UFUNCTION(BlueprintCallable) void ChangeHealth(float value);
+	UFUNCTION(BlueprintCallable) void ChangeStamina(float value);
+	UFUNCTION(BlueprintCallable) void ChangeHunger(float value);
+	
+	UFUNCTION(BlueprintCallable) float GetHealthPercent();
+	UFUNCTION(BlueprintCallable) float GetStaminaPercent();
+	UFUNCTION(BlueprintCallable) float GetHungerPercent();
+	UFUNCTION(BlueprintCallable) FString GetHealthText();
+	UFUNCTION(BlueprintCallable) FString GetStaminaText();
+	UFUNCTION(BlueprintCallable) FString GetHungerText();
 
 	UFUNCTION(BlueprintCallable)
 	FString GetDamageText();

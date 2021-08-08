@@ -5,7 +5,7 @@
 #include "Weapon.generated.h"
 
 UENUM(BlueprintType)
-enum WeaponType
+enum EWeaponType
 {
 	Unarmed = 0 UMETA(DisplayName = "Unarmed"),
 	Pistol = 1 UMETA(DisplayName = "Pistol"),
@@ -19,7 +19,7 @@ enum WeaponType
 };
 
 UENUM(BlueprintType)
-enum WeaponSlot
+enum EWeaponSlot
 {
 	RightHand = 0 UMETA(DisplayName = "RightHand"),
 	LeftHand = 1 UMETA(DisplayName = "LeftHand"),
@@ -34,9 +34,9 @@ class LNR_API UWeapon : public UItem
 public:
 	UWeapon();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TEnumAsByte<WeaponType> type;
+	TEnumAsByte<EWeaponType> type;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TEnumAsByte<WeaponSlot> slot;
+	TEnumAsByte<EWeaponSlot> slot;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class USkeletalMesh* SkeletalMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

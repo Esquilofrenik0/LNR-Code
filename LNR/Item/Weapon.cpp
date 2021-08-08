@@ -18,10 +18,12 @@ void UWeapon::UseItem(AHero* hero)
 
 FString UWeapon::PrintItemData()
 {
-	FString data = Name + "\r";
-	data += "Damage: " + FString::FromInt(damage) + "\r";
-	data += "Defense: " + FString::FromInt(defense) + "\r";
-	data += "Price: " + FString::FromInt(Price) + "\r";
-	data += "Weight: " + FString::FromInt(Weight) + "\r";
+	FString data = "Name: " + Name.ToString() + "\r";
+	data += "Type: Weapon\r";
+	data += "Description: " + Description + "\r";
+	data += "Damage: " + FString::SanitizeFloat(damage) + "\r";
+	data += "Defense: " + FString::SanitizeFloat(defense) + "\r";
+	data += "Price: " + FString::SanitizeFloat(Price) + "\r";
+	data += "Weight: " + FString::SanitizeFloat(Weight) + "\r";
 	return data;
 }

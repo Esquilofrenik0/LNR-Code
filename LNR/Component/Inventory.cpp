@@ -17,8 +17,13 @@ void UInventory::BeginPlay()
 void UInventory::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-	//Replicate to everyone
 	DOREPLIFETIME(UInventory, Slots);
+}
+
+bool UInventory::HasItem(FName itemName, int amount)
+{
+	for(FSlot slot : Slots) if(slot.Item != nullptr && slot.Item->Name == itemName && slot.Amount >= amount) return true;
+	return false;
 }
 
 void UInventory::AddItem(class UItem* item, int amount)
@@ -28,28 +33,28 @@ void UInventory::AddItem(class UItem* item, int amount)
 	{
 		for (int i = 0; i < Slots.Num(); i++)
 		{
-			if (Slots[i].item == item)
+			if (Slots[i].Item != nullptr && Slots[i].Item->Compare(item))
 			{
-				int finalAmount = Slots[i].amount + amount;
-				if(Slots[i].item->Stack >= finalAmount)
+				int finalAmount = Slots[i].Amount + amount;
+				if(Slots[i].Item->Stack >= finalAmount)
 				{
-					Slots[i].amount += amount;					
+					Slots[i].Amount += amount;					
 					return;
 				}
 				else
 				{
-					int receivedAmount = item->Stack - Slots[i].amount;
-					Slots[i].amount += receivedAmount;
+					int receivedAmount = item->Stack - Slots[i].Amount;
+					Slots[i].Amount += receivedAmount;
 					amount -= receivedAmount;
 				}
 			}
 		}
 		for (int i = 0; i < Slots.Num(); i++)
 		{
-			if (Slots[i].amount == 0 || Slots[i].item == nullptr)
+			if (Slots[i].Amount == 0 || Slots[i].Item == nullptr)
 			{
-				Slots[i].item = item;
-				Slots[i].amount = amount;
+				Slots[i].Item = item;
+				Slots[i].Amount = amount;
 				return;
 			}
 		}
@@ -62,63 +67,63 @@ void UInventory::ServerAddItem_Implementation(class UItem* item, int amount)
 	AddItem(item, amount);
 }
 
-void UInventory::RemoveItem(class UItem* item)
+void UInventory::RemoveItem(class UItem* item, int amount)
 {
 	if (GetOwnerRole() == ROLE_Authority)
 	{
 		for (int i = 0; i < Slots.Num(); i++)
 		{
-			if (Slots[i].item == item)
+			if (Slots[i].Item != nullptr && Slots[i].Item->Compare(item))
 			{
-				Slots[i].amount -= 1;
-				if (Slots[i].amount <= 0) { Slots[i].item = nullptr; }
+				Slots[i].Amount -= amount;
+				if (Slots[i].Amount <= 0) Slots[i].Item = nullptr;
 				return;
 			}
 		}
 	}
 	else
 	{
-		ServerRemoveItem(item);
+		ServerRemoveItem(item, amount);
 	}
 }
 
-void UInventory::ServerRemoveItem_Implementation(class UItem* item)
+void UInventory::ServerRemoveItem_Implementation(class UItem* item, int amount)
 {
 	RemoveItem(item);
 }
 
-void UInventory::StoreItem(class UItem* item, class UInventory* inventory)
+void UInventory::StoreItem(class UItem* item, class UInventory* inventory, int amount)
 {
 	if (GetOwnerRole() == ROLE_Authority)
 	{
-		inventory->AddItem(item);
-		RemoveItem(item);
+		inventory->AddItem(item, amount);
+		RemoveItem(item, amount);
 	}
 	else
 	{
-		ServerStoreItem(item, inventory);
+		ServerStoreItem(item, inventory, amount);
 	}
 }
 
-void UInventory::ServerStoreItem_Implementation(class UItem* item, class UInventory* inventory)
+void UInventory::ServerStoreItem_Implementation(class UItem* item, class UInventory* inventory, int amount)
 {
-	StoreItem(item, inventory);
+	StoreItem(item, inventory, amount);
 }
 
-void UInventory::RetrieveItem(class UItem* item, class UInventory* inventory)
+void UInventory::RetrieveItem(class UItem* item, class UInventory* inventory, int amount)
 {
 	if (GetOwnerRole() == ROLE_Authority)
 	{
-		AddItem(item);
-		inventory->RemoveItem(item);
+		AddItem(item, amount);
+		inventory->RemoveItem(item, amount);
 	}
 	else
 	{
-		ServerRetrieveItem(item, inventory);
+		ServerRetrieveItem(item, inventory, amount);
 	}
 }
 
-void UInventory::ServerRetrieveItem_Implementation(class UItem* item, class UInventory* inventory)
+void UInventory::ServerRetrieveItem_Implementation(class UItem* item, class UInventory* inventory, int amount)
 {
 	RetrieveItem(item, inventory);
 }

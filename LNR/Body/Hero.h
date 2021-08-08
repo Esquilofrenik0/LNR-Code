@@ -1,8 +1,9 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "Human.h"
-#include "LNR/Item/Gun.h"
 #include "LNR/LNR.h"
+#include "LNR/Item/Buildable.h"
+#include "LNR/Item/Building.h"
 #include "Hero.generated.h"
 
 UCLASS()
@@ -11,21 +12,20 @@ class AHero : public AHuman, public IFoliagePluginInterface
 	GENERATED_BODY()
 public:
 	AHero();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UInventory* Inventory;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class USpringArmComponent* TPArm;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UCameraComponent* TPCamera;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class USpringArmComponent* FPArm;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UCameraComponent* FPCamera;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) class UCameraComponent* WorldMapCamera;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) float BaseTurnRate;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) float BaseLookUpRate;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) FVector WorldMapLocation;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite) FVector LocalMapLocation;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class UInventory* Inventory;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class USpringArmComponent* TPArm;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class UCameraComponent* TPCamera;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class USpringArmComponent* FPArm;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class UCameraComponent* FPCamera;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) class UCameraComponent* WorldMapCamera;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) float BaseTurnRate;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) float BaseLookUpRate;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) FVector WorldMapLocation;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere) FVector LocalMapLocation;
 	UPROPERTY(BlueprintReadWrite) float DefaultFieldOfView;
 	UPROPERTY(BlueprintReadWrite) float InputAxisYaw;
 	UPROPERTY(BlueprintReadWrite) float InputAxisPitch;
 	UPROPERTY(BlueprintReadWrite) float InputAxisRight;
-	
 	UPROPERTY(BlueprintReadWrite) class AContainer* Container;
 	UPROPERTY(BlueprintReadWrite) FTimerHandle RegenerationHandle;
 	UPROPERTY(BlueprintReadWrite) FTimerHandle ClientTickTimer;
@@ -33,22 +33,23 @@ public:
 	UPROPERTY(BlueprintReadWrite) bool WorldMapActive;
 	UPROPERTY(BlueprintReadWrite) bool LocalMapActive;
 	UPROPERTY(BlueprintReadWrite) bool firstPerson;
-
 	UPROPERTY(Replicated, BlueprintReadWrite) float Pitch;
+	UPROPERTY(Instanced, BlueprintReadWrite, EditAnywhere) TArray<class URecipe*> Recipes;
 
 	virtual void BeginPlay() override;
 	virtual void OnRep_PlayerState() override;
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void StartJump();
 	void StopJump();
-
+	
 	void StartCrouch();
 	void StopCrouch();
 
@@ -108,7 +109,8 @@ public:
 	UFUNCTION(BlueprintImplementableEvent) void ShowWorldMap(bool value);
 	UFUNCTION(BlueprintImplementableEvent) void ShowWorldMarkers(bool value);
 	UFUNCTION(BlueprintImplementableEvent) void UpdateCompass();
-
+	UFUNCTION(BlueprintImplementableEvent) void StartBuild(UBuildable* buildable);
+	
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Foliage Plugin | Interface")
 	void OnFoliageHarvested(AActor* FoliageActor, const TArray<FFoliageRewardData>& Rewards);
 };

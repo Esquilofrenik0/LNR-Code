@@ -73,8 +73,8 @@ void UEquipment::ServerSetArmor_Implementation(int index, UArmor* nArmor)
 
 void UEquipment::EquipArmor(UArmor* nArmor)
 {
-	if (Armor[nArmor->type] != nullptr) UnEquipArmor(nArmor->type);
-	SetArmor(nArmor->type, nArmor);
+	if (Armor[nArmor->Type] != nullptr) UnEquipArmor(nArmor->Type);
+	SetArmor(nArmor->Type, nArmor);
 }
 
 void UEquipment::UnEquipArmor(int index)
@@ -94,10 +94,10 @@ UWeapon* UEquipment::GetWeapon(int index)
 int UEquipment::GetWeaponSlot(UWeapon* nWeapon)
 {
 	int slot = 0;
-	if (nWeapon->slot == WeaponSlot::RightHand) slot = 0;
-	else if (nWeapon->slot == WeaponSlot::TwoHand) slot = 0;
-	else if (nWeapon->slot == WeaponSlot::AnyHand) slot = 0;
-	else if (nWeapon->slot == WeaponSlot::LeftHand) slot = 1;
+	if (nWeapon->slot == EWeaponSlot::RightHand) slot = 0;
+	else if (nWeapon->slot == EWeaponSlot::TwoHand) slot = 0;
+	else if (nWeapon->slot == EWeaponSlot::AnyHand) slot = 0;
+	else if (nWeapon->slot == EWeaponSlot::LeftHand) slot = 1;
 	return slot;
 }
 
@@ -147,8 +147,8 @@ void UEquipment::EquipWeapon(UWeapon* nWeapon)
 		int slot = GetWeaponSlot(nWeapon);
 		if (Weapon[slot]) UnEquipWeapon(slot);
 		
-		if(slot == 0 && Weapon[1] && nWeapon->slot == WeaponSlot::TwoHand) UnEquipWeapon(1);
-		else if(slot == 1 && Weapon[0] && Weapon[0]->slot == WeaponSlot::TwoHand) UnEquipWeapon(0);
+		if(slot == 0 && Weapon[1] && nWeapon->slot == EWeaponSlot::TwoHand) UnEquipWeapon(1);
+		else if(slot == 1 && Weapon[0] && Weapon[0]->slot == EWeaponSlot::TwoHand) UnEquipWeapon(0);
 		
 		SetWeapon(slot, nWeapon);
 	}

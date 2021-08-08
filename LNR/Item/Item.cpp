@@ -13,19 +13,21 @@ UItem::UItem()
 
 void UItem::UseItem(AHero* hero)
 {
-	Print(Name + " used as hero");
+	Print(Name.ToString() + " used");
 }
 
 bool UItem::Compare(UItem* item)
 {
-	if (item->Name != Name) return false;
-	else return true;
+	if(item == nullptr) return false;
+	if(item->Name == Name) return true;
+	else return false;
 }
 
 FString UItem::PrintItemData()
 {
-	FString data = Name + "\r";
-	data += "Price: " + FString::FromInt(Price) + "\r";
-	data += "Weight: " + FString::FromInt(Weight) + "\r";
+	FString data = "Name: " + Name.ToString() + "\r";
+	data += "Description: " + Description + "\r";
+	data += "Price: " + FString::SanitizeFloat(Price) + "\r";
+	data += "Weight: " + FString::SanitizeFloat(Weight) + "\r";
 	return data;
 }

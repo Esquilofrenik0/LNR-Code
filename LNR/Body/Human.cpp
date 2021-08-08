@@ -101,7 +101,7 @@ void AHuman::RefreshAttributes()
 		}
 		for (UArmor* armor : Equipment->Armor)
 		{
-			if (armor != nullptr) Attributes->Defense += armor->defense;
+			if (armor != nullptr) Attributes->Defense += armor->Defense;
 		}
 	}
 	else ServerRefreshAttributes();
